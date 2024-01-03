@@ -37,11 +37,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "admin",
   },
-  // user: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "User",
-  //   required: true,
-  // },
+
   createdAt: {
     type: Date,
     default: Date.now,
@@ -53,9 +49,9 @@ const userSchema = new mongoose.Schema({
 
 //make password hashable
 
-userSchema.pre("save", async function () {
+userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
-    next();
+    return next();
   }
 
   this.password = await bcrypt.hash(this.password, 10);
@@ -69,8 +65,23 @@ userSchema.methods.getJWTToken = function () {
   });
 };
 
-userSchema.methods.comparePassword = function (enterPassword) {
-  return bcrypt.compare(enterPassword, this.password);
+userSchema.methods.comparePassword = async function (enterPassword) {
+  return await bcrypt.compare(enterPassword, this.password);
+};
+
+//reset password tokken
+
+userSchema.methods.getResetPassword = function () {
+  const resetToken = crypto.randomBytes(20).toString("hex");
+
+  this.resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  this.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
+
+  return resetToken;
 };
 
 module.exports = mongoose.model("User", userSchema);

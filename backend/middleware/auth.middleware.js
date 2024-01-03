@@ -7,21 +7,15 @@ exports.isAuthenticated = asynchandler(async (req, res, next) => {
   const { token } = req.cookies;
   //   console.log(token);
 
-  if (!token) {
-    return next(new ErrorHander(401, "Please login to access resources"));
-  }
-
+  if (!token) {return next(new ErrorHander(401, "Please login to access resources"));}
   const decodedData = jwt.verify(token, process.env.JWT_SECRET);
-
   req.user = await User.findById(decodedData.id);
-
   next();
 });
 
-
-exports.authorisedRole = (...role) => {
+exports.authorisedRole = (...roles) => {
   return (req, res, next) => {
-    if (!role.includes(req.user.role)) {
+    if (!roles.includes(req.user.role)) {
       return next(
         new ErrorHander(
           403,
@@ -29,7 +23,6 @@ exports.authorisedRole = (...role) => {
         )
       );
     }
-
     next();
   };
 };

@@ -142,3 +142,13 @@ dist
 .svelte-kit
 
 # End of https://www.toptal.com/developers/gitignore/api/node
+
+
+
+
+#  npm install axios chart.js country-state-city overlay-navbar react react-alert react-alert-template-basic react-chartjs-2 react-dom react-helmet react-icons react-js-pagination react-material-ui-carousel react-redux react-router-dom react-scripts redux redux-devtools-extension redux-thunk web-vitals webfontloader
+
+
+
+
+  npm install axios  overlay-navbar react   react-dom react-helmet react-icons  react-redux  react-router-dom redux  redux-thunk 

@@ -18,7 +18,8 @@ const {
 
 const router = express.Router();
 
-router.route("/product").get(isAuthenticated, getAllProducts);
+router.route("/product").get(getAllProducts);
+router.route("/product/:keyword").get(getAllProducts);
 
 router
   .route("/product/new")

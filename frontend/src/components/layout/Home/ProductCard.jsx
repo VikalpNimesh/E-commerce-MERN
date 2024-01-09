@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./Home.css"
 // import Rating from "@material-ui/lab/Rating";
 
 const ProductCard = ({ product }) => {
@@ -13,12 +14,14 @@ const ProductCard = ({ product }) => {
 
   return (
     <Link className="productCard" to={`/product/${_id}`}>
-      <img  src={images} alt={name} />
+      <img  src={images[0].url} alt={name} />
       <p>{name}</p>
       <div>
+
       
         <span className="product-card-span"> ({numOfReviews} Reviews)</span>
       </div>
+      <div>{ratings}</div>
       <span>{`₹${price}`}</span>
     </Link>
   );

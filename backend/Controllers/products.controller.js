@@ -5,8 +5,8 @@ const Apifeatures = require("../utils/apiFeatures");
 
 //Get products
 
-exports.getAllProducts = asynchandler(async (req, res) => {
-  let resultPerPage = 5;
+exports.getAllProducts = asynchandler(async (req, res, next) => {
+  let resultPerPage = 8;
   const productCount = await Product.countDocuments();
   const apifeature = new Apifeatures(Product.find({}), req.query)
     .search()
@@ -17,6 +17,7 @@ exports.getAllProducts = asynchandler(async (req, res) => {
     succes: true,
     allProducts,
     productCount,
+    resultPerPage
   });
 });
 
@@ -50,7 +51,6 @@ exports.updateProduct = asynchandler(async (req, res, next) => {
   });
 });
 
-
 // delete product
 
 exports.deletedProduct = asynchandler(async (req, res, next) => {
@@ -71,7 +71,7 @@ exports.deletedProduct = asynchandler(async (req, res, next) => {
 // single product details
 
 exports.getproductDetail = asynchandler(async (req, res, next) => {
-  let product = await Product.find(req.params.id);
+  let product = await Product.findById(req.params.id);
 
   if (!product) {
     return next(new ErrorHander(500, "Product is not found"));

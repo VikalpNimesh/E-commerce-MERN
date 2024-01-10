@@ -9,7 +9,7 @@ const options = {
   navColor1: "white",
   logoHoverSize: "10px",
   logoHoverColor: "#eb4034",
-  link1Text: "Home",
+  link1Text: "HomePage",
   link2Text: "Products",
   link3Text: "Contact",
   link4Text: "About",

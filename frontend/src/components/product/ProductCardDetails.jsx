@@ -10,7 +10,6 @@ import {
 } from "../../store/slices/productSlice.js";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { Rating } from "@mui/material";
 import Loader from "../Loader/Loader.jsx";
 import ReviewCard from "./ReviewCard.jsx";
 
@@ -25,13 +24,13 @@ const ProductCardDetails = () => {
   };
 
   useEffect(() => {
-    const getSingleProduct = async () => {
+    const getSingleProduct = async (id) => {
       try {
         const { data } = await axios.get(
           `http://localhost:4000/api/v1/product/${id}`
         );
         dispatch(getSingleProductSuccess(data.product));
-        console.log(data.product);
+        console.log(data);
       } catch (error) {
         dispatch(getSingleProductFail(error.response.data.message));
       }
@@ -42,7 +41,7 @@ const ProductCardDetails = () => {
       clearError();
     }
 
-    getSingleProduct(); // Call the API when the component mounts or when id changes
+    getSingleProduct(id); // Call the API when the component mounts or when id changes
 
     return () => {
       // Cleanup function to clear errors when the component unmounts

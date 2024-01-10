@@ -19,18 +19,21 @@ const Products = () => {
   const { products, error, resultPerPage, loading, productCount } = useSelector(
     (state) => state.products
   );
-  console.log(products, error, resultPerPage, loading, productCount);
   const alert = useAlert();
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
+  const setCurrentPageNo = (e) => {
+    setCurrentPage(e);
+  };
+
   useEffect(() => {
-    const fetchData = async (keyword = "") => {
+    const fetchData = async (keyword = "", currentPage = 1) => {
       try {
         dispatch(getAllProductsRequest());
         const { data } = await axios.get(
-          `http://localhost:4000/api/v1/product?keyword=${keyword}`
-          // `http://localhost:4000/api/v1/product`
+          `http://localhost:4000/api/v1/products?keyword=${keyword}&page=${currentPage}`
         );
+        console.log(data);
         dispatch(getAllProductsSuccess(data));
       } catch (error) {
         dispatch(getAllProductsFail(error.response.data.message));
@@ -42,8 +45,8 @@ const Products = () => {
       clearErrors();
     }
 
-    fetchData(); // Fetch data when the component mounts or when the keyword changes
-  }, [dispatch, error, keyword, alert]);
+    fetchData(keyword, currentPage);
+  }, [dispatch, error, keyword, alert, currentPage]);
 
   return (
     <>
@@ -67,7 +70,7 @@ const Products = () => {
             activePage={currentPage}
             itemsCountPerPage={resultPerPage}
             totalItemsCount={productCount}
-            onChange={setCurrentPage}
+            onChange={setCurrentPageNo}
             nextPageText="Next"
             prevPageText="Prev"
             firstPageText="1st"

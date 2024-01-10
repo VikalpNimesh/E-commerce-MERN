@@ -33,6 +33,7 @@ exports.createProduct = asynchandler(async (req, res, next) => {
 });
 
 //Update pruduct
+
 exports.updateProduct = asynchandler(async (req, res, next) => {
   let product = await Product.findById(req.params.id);
 
@@ -70,7 +71,7 @@ exports.deletedProduct = asynchandler(async (req, res, next) => {
 
 // single product details
 
-exports.getproductDetail = asynchandler(async (req, res, next) => {
+exports.getProductDetail = asynchandler(async (req, res, next) => {
   let product = await Product.findById(req.params.id);
 
   if (!product) {
@@ -80,7 +81,7 @@ exports.getproductDetail = asynchandler(async (req, res, next) => {
   // await product.remove()
   res.status(200).json({
     succes: true,
-    message: "Product delete succesfully",
+    message: "Product found succesfully",
     product,
   });
 });
@@ -95,19 +96,19 @@ exports.getAdminProducts = asynchandler(async (req, res, next) => {
   });
 });
 
-// Get Product Details
-exports.getProductDetails = asynchandler(async (req, res, next) => {
-  const product = await Product.findById(req.params.id);
+// // Get Product Details
+// exports.getProductDetails = asynchandler(async (req, res, next) => {
+//   const product = await Product.findById(req.params.id);
 
-  if (!product) {
-    return next(new ErrorHander("Product not found", 404));
-  }
+//   if (!product) {
+//     return next(new ErrorHander("Product not found", 404));
+//   }
 
-  res.status(200).json({
-    success: true,
-    product,
-  });
-});
+//   res.status(200).json({
+//     success: true,
+//     product,
+//   });
+// });
 
 // Update Product -- Admin
 

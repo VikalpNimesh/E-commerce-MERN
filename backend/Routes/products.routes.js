@@ -4,12 +4,12 @@ const {
   createProduct,
   updateProduct,
   deletedProduct,
-  getproductDetail,
+  getProductDetail,
   createProductReview,
   deleteReview,
   getProductReviews,
   getAdminProducts,
-  getProductDetails,
+
 } = require("../Controllers/products.controller.js");
 const {
   isAuthenticated,
@@ -18,8 +18,8 @@ const {
 
 const router = express.Router();
 
-router.route("/product").get(getAllProducts);
-router.route("/product/:keyword").get(getAllProducts);
+router
+.route("/products").get(getAllProducts);
 
 router
   .route("/product/new")
@@ -29,9 +29,8 @@ router
   .route("/product/:id")
   .put(isAuthenticated, authorisedRole("admin"), updateProduct)
   .delete(isAuthenticated, authorisedRole("admin"), deletedProduct)
-  .get(getproductDetail);
+  .get(getProductDetail);
 
-// router.route("/product/:id")
 
 router
   .route("/admin/products")
@@ -45,8 +44,6 @@ router
   .route("/admin/product/:id")
   .put(isAuthenticated, authorisedRole("admin"), updateProduct)
   .delete(isAuthenticated, authorisedRole("admin"), deletedProduct);
-
-router.route("/product/:id").get(getProductDetails);
 
 router.route("/review").put(isAuthenticated, createProductReview);
 

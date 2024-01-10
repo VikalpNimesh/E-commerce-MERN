@@ -54,10 +54,9 @@ const Products = () => {
           <h2 className="productsHeading">Products</h2>
 
           <div className="products">
-          {products?.map((product) => (
-  <ProductCard key={product?._id} product={product} />
-))}
-
+            {products?.map((product) => (
+              <ProductCard key={product?._id} product={product} />
+            ))}
           </div>
         </div>
       )}
